@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <title>login form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+<div id="header-root"></div>
+
+<main>
+    <div class="bg-custom vh-100 d-flex flex-column">
+        <div class="myContainer">
+            <section>
+                <div class="form-wrapper" >
+                    <h3 class="text-center">Σύνδεση</h3>
+                    <section class="text-center" id = "registerIdform">
+                        <span >Δεν έχετε λογαρισμό? </span>
+                        <a href="index.html" class="text">Εγγραφτείτε εδώ</a>
+                    </section>
+                    <form id="loginForm" onsubmit="return loginUser(event);">
+                        <div class="sect">
+                            <label for="userType">User Type</label>
+                            <select class="form-select" id="userType" name="userType" required>
+                                <option value="user">Citizen</option>
+                                <option value="volunteer">Volunteer</option>
+                            </select>
+                        </div>
+                        <div class="sect">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" id="username" name="username" required>
+                        </div>
+                        <div class="sect">
+                            <label for="password">Κωδικός χρήστη</label>
+                            <div class="input-container">
+                                <input type="password" class="form-control" id="password" name="password" required>
+                                <button type="button" name="buttonPass" onclick="showPassword(this)">
+                                    <i class="fas fa-lock"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="sect">
+                            <button class="custom-btn" type="submit">Σύνδεση</button>
+                        </div>
+                        <div class="sect" id="ajaxContent" style="color: red;"></div>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </div>
+</main>
+
+
+<div id="footer-placeholder"></div>
+
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="js/load_header.js"></script>
+<script src="js/load_footer.js"></script>
+<script src="js/load_popups.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+<script src="js/ajax.js"></script>
+</body>
+</html>

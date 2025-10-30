@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin page</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+<div id="header-root"></div>
+
+<main class="container-fluid py-4">
+<div class="myContainer">
+    <div class="form-wrapper">
+        <h3 style="color: white" class="text-center">Συντονισμός Εθελοντών</h3>
+        <h3>Εθελοντές</h3>
+        <div id="vol-list"></div>
+        <h3>Αιτήματα Εθελοντών</h3>
+        <div id="req-list"></div>
+    </div>
+    <div class="form-wrapper">
+        <section>
+        <h3 style="color: white" class="text-center">Συντονισμός Δράσεων</h3>
+        <h3>All Incidents</h3>
+        <div id="inc-list"></div>
+        <section class="button-container">
+            <div id="newIncidentButton" class="custom-btn" onclick="showNewIncidentForm()">Δημιουργία Συμβάντος</div>
+            <div id="putIncidentButton" class="custom-btn" onclick="showPutIncidentForm()">Επεξεργασία Συμβάντος</div>
+        </section>
+        <section class="form-container">
+        <form id="newIncidentForm" style="display: none" method="post" onsubmit="newIncidentServlet(); return false;">
+            <div class="sect">
+                <label for="incident_type">Τύπος</label>
+                <select id="incident_type" name="incident_type" required>
+                    <option value="fire">fire</option>
+                    <option value="accident">accident</option>
+                </select>
+            </div>
+            <div class="sect">
+                <label for="description">Περιγραφή</label>
+                <input id="description" name="description" required>
+            </div>
+            <div class="sect" style="display: none">
+                <label for="status"></label>
+                <input id="status" name="status" value="running" required>
+            </div>
+            <div class="sect" style="display: none">
+                <label for="user_phone"></label>
+                <input id="user_phone" name="user_phone" value="2813407000" required>
+            </div>
+            <div class="sect" style="display: none">
+                <label for="user_type"></label>
+                <input id="user_type" name="user_type" value ="admin" required>
+            </div>
+            <div class="sect">
+                <label for="address">Διεύθυνση</label>
+                <input id="address" name="address" required>
+            </div>
+            <div class="sect" style="display: none">
+                <label for="lat">latitude</label>
+                <input id="lat" name="lat" required>
+            </div>
+            <div class="sect"style="display: none">
+                <label for="lon">longitude</label>
+                <input id="lon" name="lon" required>
+            </div>
+            <div class="sect">
+                <label for="municipality">Νομός</label>
+                <input id="municipality" name="municipality" required>
+            </div>
+            <div class="sect">
+                <label for="prefecture">Περιφέρια</label>
+                <input id="prefecture" name="prefecture" required>
+            </div>
+            <div class="sect">
+                <div id="locationButtonCheck" class="btn" onclick="validateLocation()">Εύρεση Τοποθεσίας</div>
+            </div>
+            <div class="sect">
+                <label for="danger">Κίνδυνος</label>
+                <select id="danger" name="danger" required>
+                    <option value="high">high</option>
+                    <option value="low">low</option>
+                    <option value="unknown">unknown</option>
+                </select>
+            </div>
+            <button type="submit" class="btn">Δημιουργία</button>
+        </form>
+        </section>
+        <section id="editFormContainer" class="form-container" style="display: none">
+            <br>
+            <label for="editID">ID συμβάντος</label>
+            <input style="margin-bottom: 5px" id="editID" name="editID">
+            <br>
+            <section class="button-container">
+                <br>
+                <div style="margin: 5px" id="FakeIncBtn" class="custom-btn" onclick="FakeCancelIncident(editID.value,'fake')">Ψευδές Συμβάντος</div>
+                <div style="margin: 5px" id="CancelIncBtn" class="custom-btn" onclick="showCancelInput()">Ακύρωση Συμβάντος</div>
+                <div style="margin: 5px" id="editIncBtn" class="custom-btn" onclick="showEditForm()">Επεξεργασία Συμβάντος</div>
+            </section>
+            <section class="cancelEndInput" id="cancelEndInput" style="display: none">
+                <label for="finalResult">Τελικό Μήνυμα</label>
+                <input id="finalResult" style="margin: 7px" name="finalResult" required>
+                <div id = "finalMessageBtn" class="btn" onclick="FakeCancelIncident(editID.value,'finished')">Αποστολή</div>
+            </section>
+            <form id="editIncidentForm" style="display: none"  method="post" onsubmit="editIncident(); return false;">
+                <div class="sect">
+                    <label for="checkReq">Requested</label>
+                    <input id="checkReq" name="checkReq" type="checkbox">
+                    <label for="descriptionEdit">Περιγραφή</label>
+                    <input id="descriptionEdit" name="description" required>
+                </div>
+                <div class="sect">
+                    <label for="dangerEdit">Κίνδυνος</label>
+                    <select id="dangerEdit" name="danger" required>
+                        <option value="high">high</option>
+                        <option value="low">low</option>
+                        <option value="unknown">unknown</option>
+                    </select>
+                </div>
+                <div class="sect">
+                    <label for="firemenEdit">firemen</label>
+                    <input id="firemenEdit" name="firemen" required>
+                </div>
+                <div class="sect">
+                    <label for="vehiclesEdit">vehicles</label>
+                    <input id="vehiclesEdit" name="vehicles" required>
+                </div>
+                <button type="submit" class="custom-btn">Υποβολή</button>
+            </form>
+        </section>
+        </section>
+    </div>
+    <div class="form-wrapper" style="color: #5d4c98">
+        <h3 style="color: white" class="text-center">Διαχείριση μηνυμάτων</h3>
+        <section class="button-container">
+            <div id="viewMessButton" class="custom-btn" onclick="showMess()">Προβολή μηνυμάτων</div>
+            <div id="sendMessButton" class="custom-btn" onclick="showSentForm()">Αποστολή μηνύματος</div>
+        </section>
+        <div id="messContainer" style="display: none">
+            <h3 style="color: white" class="text-center">Μηνύματα</h3>
+            <div id="mess-list"></div>
+        </div>
+        <div id="messSentContainer" style="display: none">
+            <h3 style="color: white" class="text-center">Αποστολή μηνύματος</h3>
+            <form id="messageForm" method="post" onsubmit="sentMessServlet(); return false;">
+                <div class="sect">
+                    <label for="recipient">Αποδέκτης</label>
+                    <input id="recipient" name="recipient">
+                </div>
+                <div class="sect">
+                    <label for="incident_id">Incident ID</label>
+                    <input id="incident_id" name="incident_id">
+                </div>
+                <div class="sect" >
+                    <label for="message">Μήνυμα</label>
+                    <input id="message" name="message">
+                </div>
+                <div class="sect" style="display: none">
+                    <label for="sender"></label>
+                    <input id="sender" name="sender" value="admin">
+                </div>
+                <button type="submit" class="btn">Αποστολή</button>
+            </form>
+        </div>
+    </div>
+    <div class="form-wrapper">
+        <h3 style="color: white">Στατιστικά</h3>
+        <div id="charts">
+            <div id="incidents-chart" style="width: 600px; height: 400px;"></div>
+            <div id="users-volunteers-chart" style="width: 600px; height: 400px;"></div>
+            <div id="vehicles-firefighters-chart" style="width: 600px; height: 400px;"></div>
+        </div>
+    </div>
+
+    <div class="form-wrapper" style="width: 700px">
+        <section class="button-container">
+            <div id="searchButton" class="custom-btn" onclick="toggleSearch()">Past Incidents</div>
+        </section>
+        <div id="searchContainer" style="display: none;"></div>
+    </div>
+
+</div>
+</main>
+
+<div id="footer-placeholder"></div>
+
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="js/load_header.js"></script>
+<script src="js/load_footer.js"></script>
+<script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+<script src="js/load_popups.js"></script>
+<script src="js/listenerAdmin.js"></script>
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+<script src="js/search_incident.js"></script>
+<!--<script>-->
+<!--    const messageInput = document.getElementById('message');-->
+<!--    messageInput.style = '';-->
+<!--</script>-->
+</body>
+</html>

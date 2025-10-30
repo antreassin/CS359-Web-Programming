@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-199 Emergency Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <h1>🚨 E-199 Emergency Management System</h1>
+                <p class="tagline">Real-time Emergency Response & Coordination</p>
+            </div>
+            <div class="header-stats">
+                <div class="stat-card active-incidents">
+                    <span class="stat-number" id="activeCount">0</span>
+                    <span class="stat-label">Active Incidents</span>
+                </div>
+                <div class="stat-card resolved-incidents">
+                    <span class="stat-number" id="resolvedCount">0</span>
+                    <span class="stat-label">Resolved Today</span>
+                </div>
+                <div class="stat-card response-time">
+                    <span class="stat-number" id="avgResponseTime">0</span>
+                    <span class="stat-label">Avg Response (min)</span>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="main-layout">
+                <!-- Sidebar Navigation -->
+                <aside class="sidebar">
+                    <nav>
+                        <ul class="nav-menu">
+                            <li class="nav-item active" data-view="dashboard">
+                                <span class="nav-icon">📊</span>
+                                <span class="nav-text">Dashboard</span>
+                            </li>
+                            <li class="nav-item" data-view="incidents">
+                                <span class="nav-icon">🚨</span>
+                                <span class="nav-text">Incidents</span>
+                            </li>
+                            <li class="nav-item" data-view="report">
+                                <span class="nav-icon">📝</span>
+                                <span class="nav-text">Report Incident</span>
+                            </li>
+                            <li class="nav-item" data-view="services">
+                                <span class="nav-icon">🚒</span>
+                                <span class="nav-text">Emergency Services</span>
+                            </li>
+                            <li class="nav-item" data-view="communication">
+                                <span class="nav-icon">💬</span>
+                                <span class="nav-text">Communication</span>
+                            </li>
+                        </ul>
+                    </nav>
+                </aside>
+
+                <!-- Main Content Area -->
+                <div class="content">
+                    <!-- Dashboard View -->
+                    <section id="dashboard-view" class="view active-view">
+                        <h2>Dashboard Overview</h2>
+                        <div class="dashboard-grid">
+                            <div class="dashboard-card">
+                                <h3>Recent Incidents</h3>
+                                <div id="recentIncidents" class="recent-incidents-list">
+                                    <p class="no-data">No recent incidents</p>
+                                </div>
+                            </div>
+                            <div class="dashboard-card">
+                                <h3>Service Status</h3>
+                                <div id="serviceStatus" class="service-status-list">
+                                    <div class="service-item available">
+                                        <span class="service-icon">🚒</span>
+                                        <span class="service-name">Fire Department</span>
+                                        <span class="service-badge">Available</span>
+                                    </div>
+                                    <div class="service-item available">
+                                        <span class="service-icon">🚑</span>
+                                        <span class="service-name">Ambulance</span>
+                                        <span class="service-badge">Available</span>
+                                    </div>
+                                    <div class="service-item available">
+                                        <span class="service-icon">🚓</span>
+                                        <span class="service-name">Police</span>
+                                        <span class="service-badge">Available</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Incidents View -->
+                    <section id="incidents-view" class="view">
+                        <div class="view-header">
+                            <h2>All Incidents</h2>
+                            <div class="filter-controls">
+                                <select id="statusFilter" class="filter-select">
+                                    <option value="all">All Status</option>
+                                    <option value="reported">Reported</option>
+                                    <option value="dispatched">Dispatched</option>
+                                    <option value="responding">Responding</option>
+                                    <option value="resolved">Resolved</option>
+                                </select>
+                                <select id="priorityFilter" class="filter-select">
+                                    <option value="all">All Priorities</option>
+                                    <option value="critical">Critical</option>
+                                    <option value="high">High</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="low">Low</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="incidents-table-wrapper">
+                            <table class="incidents-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Type</th>
+                                        <th>Location</th>
+                                        <th>Priority</th>
+                                        <th>Status</th>
+                                        <th>Time</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="incidentsTableBody">
+                                    <tr>
+                                        <td colspan="7" class="no-data">No incidents reported</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Report Incident View -->
+                    <section id="report-view" class="view">
+                        <h2>Report New Incident</h2>
+                        <form id="incidentForm" class="incident-form">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="incidentType">Incident Type *</label>
+                                    <select id="incidentType" required>
+                                        <option value="">Select Type</option>
+                                        <option value="fire">Fire</option>
+                                        <option value="medical">Medical Emergency</option>
+                                        <option value="accident">Traffic Accident</option>
+                                        <option value="hazmat">Hazardous Materials</option>
+                                        <option value="rescue">Rescue Operation</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="priority">Priority Level *</label>
+                                    <select id="priority" required>
+                                        <option value="">Select Priority</option>
+                                        <option value="critical">Critical</option>
+                                        <option value="high">High</option>
+                                        <option value="medium">Medium</option>
+                                        <option value="low">Low</option>
+                                    </select>
+                                </div>
+                                <div class="form-group full-width">
+                                    <label for="location">Location *</label>
+                                    <input type="text" id="location" placeholder="Enter address or location" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="contactName">Contact Name</label>
+                                    <input type="text" id="contactName" placeholder="Reporting person's name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="contactPhone">Contact Phone</label>
+                                    <input type="tel" id="contactPhone" placeholder="Phone number">
+                                </div>
+                                <div class="form-group full-width">
+                                    <label for="description">Description *</label>
+                                    <textarea id="description" rows="4" placeholder="Describe the incident in detail" required></textarea>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">Submit Incident Report</button>
+                                <button type="reset" class="btn btn-secondary">Clear Form</button>
+                            </div>
+                        </form>
+                    </section>
+
+                    <!-- Emergency Services View -->
+                    <section id="services-view" class="view">
+                        <h2>Emergency Services Management</h2>
+                        <div class="services-grid">
+                            <div class="service-card fire">
+                                <div class="service-card-header">
+                                    <span class="service-icon-large">🚒</span>
+                                    <h3>Fire Department</h3>
+                                </div>
+                                <div class="service-card-body">
+                                    <div class="service-info">
+                                        <p><strong>Units Available:</strong> <span id="fireUnits">5</span></p>
+                                        <p><strong>Personnel:</strong> <span id="firePersonnel">25</span></p>
+                                        <p><strong>Status:</strong> <span class="badge-available">Available</span></p>
+                                    </div>
+                                    <div class="service-stats">
+                                        <p><strong>Active Responses:</strong> <span id="fireActive">0</span></p>
+                                        <p><strong>Today's Calls:</strong> <span id="fireCalls">0</span></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="service-card medical">
+                                <div class="service-card-header">
+                                    <span class="service-icon-large">🚑</span>
+                                    <h3>Medical Emergency</h3>
+                                </div>
+                                <div class="service-card-body">
+                                    <div class="service-info">
+                                        <p><strong>Units Available:</strong> <span id="medicalUnits">8</span></p>
+                                        <p><strong>Personnel:</strong> <span id="medicalPersonnel">32</span></p>
+                                        <p><strong>Status:</strong> <span class="badge-available">Available</span></p>
+                                    </div>
+                                    <div class="service-stats">
+                                        <p><strong>Active Responses:</strong> <span id="medicalActive">0</span></p>
+                                        <p><strong>Today's Calls:</strong> <span id="medicalCalls">0</span></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="service-card police">
+                                <div class="service-card-header">
+                                    <span class="service-icon-large">🚓</span>
+                                    <h3>Police Department</h3>
+                                </div>
+                                <div class="service-card-body">
+                                    <div class="service-info">
+                                        <p><strong>Units Available:</strong> <span id="policeUnits">12</span></p>
+                                        <p><strong>Personnel:</strong> <span id="policePersonnel">48</span></p>
+                                        <p><strong>Status:</strong> <span class="badge-available">Available</span></p>
+                                    </div>
+                                    <div class="service-stats">
+                                        <p><strong>Active Responses:</strong> <span id="policeActive">0</span></p>
+                                        <p><strong>Today's Calls:</strong> <span id="policeCalls">0</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Communication View -->
+                    <section id="communication-view" class="view">
+                        <h2>Communication Center</h2>
+                        <div class="communication-layout">
+                            <div class="communication-panel">
+                                <h3>Incident Updates</h3>
+                                <div id="communicationFeed" class="communication-feed">
+                                    <div class="communication-message system">
+                                        <span class="message-time">System</span>
+                                        <p>Communication center initialized. Ready to coordinate emergency responses.</p>
+                                    </div>
+                                </div>
+                                <div class="communication-input">
+                                    <input type="text" id="messageInput" placeholder="Type a message for coordination...">
+                                    <button id="sendMessageBtn" class="btn btn-primary">Send</button>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Incident Details Modal -->
+    <div id="incidentModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Incident Details</h2>
+                <span class="modal-close">&times;</span>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Details will be populated dynamically -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary close-modal">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

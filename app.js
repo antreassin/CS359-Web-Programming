@@ -36,20 +36,32 @@ function initializeApp() {
 
 // Load data from localStorage
 function loadDataFromStorage() {
-    const storedIncidents = localStorage.getItem('e199_incidents');
-    const storedServices = localStorage.getItem('e199_services');
-    const storedMessages = localStorage.getItem('e199_messages');
-    
-    if (storedIncidents) {
-        state.incidents = JSON.parse(storedIncidents);
-    }
-    
-    if (storedServices) {
-        state.services = JSON.parse(storedServices);
-    }
-    
-    if (storedMessages) {
-        state.messages = JSON.parse(storedMessages);
+    try {
+        const storedIncidents = localStorage.getItem('e199_incidents');
+        const storedServices = localStorage.getItem('e199_services');
+        const storedMessages = localStorage.getItem('e199_messages');
+        
+        if (storedIncidents) {
+            state.incidents = JSON.parse(storedIncidents);
+        }
+        
+        if (storedServices) {
+            state.services = JSON.parse(storedServices);
+        }
+        
+        if (storedMessages) {
+            state.messages = JSON.parse(storedMessages);
+        }
+    } catch (error) {
+        console.error('Error loading data from storage:', error);
+        // Reset to empty state if data is corrupted
+        state.incidents = [];
+        state.services = {
+            fire: { units: 5, personnel: 25, active: 0, calls: 0 },
+            medical: { units: 8, personnel: 32, active: 0, calls: 0 },
+            police: { units: 12, personnel: 48, active: 0, calls: 0 }
+        };
+        state.messages = [];
     }
 }
 
@@ -241,8 +253,8 @@ function handleIncidentSubmit(e) {
     // Add system message
     addSystemMessage(`New incident reported: ${formData.id} - ${formData.type} at ${formData.location}`);
     
-    // Show success and reset form
-    alert('Incident reported successfully! ID: ' + formData.id);
+    // Show success notification
+    showNotification(`Incident reported successfully! ID: ${formData.id}`, 'success');
     e.target.reset();
     
     // Update UI
@@ -304,6 +316,10 @@ function updateHeaderStats() {
     document.getElementById('avgResponseTime').textContent = avgResponseTime;
 }
 
+// Constants for simulated response time calculation
+const MIN_RESPONSE_TIME = 5;  // minutes
+const MAX_RESPONSE_TIME_RANGE = 15;  // minutes (will be added to MIN)
+
 // Calculate average response time
 function calculateAverageResponseTime() {
     const resolvedIncidents = state.incidents.filter(inc => inc.status === 'resolved');
@@ -312,8 +328,8 @@ function calculateAverageResponseTime() {
         return 0;
     }
     
-    // Simulate response times between 5-20 minutes
-    const avgTime = Math.floor(Math.random() * 15) + 5;
+    // Simulate response times between MIN_RESPONSE_TIME and (MIN_RESPONSE_TIME + MAX_RESPONSE_TIME_RANGE) minutes
+    const avgTime = Math.floor(Math.random() * MAX_RESPONSE_TIME_RANGE) + MIN_RESPONSE_TIME;
     return avgTime;
 }
 
@@ -589,6 +605,30 @@ function formatTimestamp(timestamp) {
     } else {
         return date.toLocaleString();
     }
+}
+
+// Show notification message
+function showNotification(message, type = 'info') {
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.textContent = message;
+    
+    // Add to body
+    document.body.appendChild(notification);
+    
+    // Trigger animation
+    setTimeout(() => {
+        notification.classList.add('show');
+    }, 10);
+    
+    // Remove after 4 seconds
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => {
+            document.body.removeChild(notification);
+        }, 300);
+    }, 4000);
 }
 
 // Export functions to global scope for HTML onclick handlers

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Website</title>
+    <link rel="icon" type="image/x-icon" href="images/icon_car.ico">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" 
+        src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v15.0" 
+        nonce="ABCDE">
+    </script>   
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <button class="navbar-toggler mx-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#interests">Interests</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#subjects">Subjects</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    
+    <section id="about" class="container mt-5">
+        <div class="row">
+            <div class="col-md-6">
+                <img src="images/me.png" class="ego_img" alt="me">
+            </div>
+            <div class="col-md-6">
+                <p style="text-align: right;"><span class="hi">Hi</span>, my name is <strong>Andreas</strong>,<br>
+                and I am a <strong>computer science</strong><br>
+                student based in <strong>Heraklion, Crete</strong>.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="about_mango" class="container mt-5">
+        <div class="row">
+            <div class="col-md-6 text-align: left">
+                <p>I also have a chaotic orange cat <br>
+                named <strong>Mango</strong>. She keeps me company,<br>
+                and her favorite thing to do <br>
+                is make me pay vet bills.</p>
+                <br>
+            <div class="col-md-5">
+                <br>
+                <p><span class="u_can">You can listen to her meowing here:</span>
+                    <audio controls>
+                        <source src="mp3/miaou_voice.mp3" type="audio/mp3">
+                    </audio>
+                    <span class = "yup">Yup, it's her meowing!</span>
+                </p>
+            </div>
+            </div>
+            <div class="col-md-5 text-align: right">
+                    <video width="216" height="384" loop controls autoplay muted>
+                        <source src="vids/comp_cat.mp4" type="video/mp4">
+                    </video>
+            </div>
+        </div>
+    </section>
+    <section id="interests" class="container mt-5">
+        <div class="row">
+            <h3 class="col-12">Interests</h3>
+            <div class="col-md-6 text-left">
+                <p>
+                    <strong>Music</strong> is one thing that really keeps me interested.
+                    I love exploring new genres, songs, and artists.
+                    <strong>Pop, indie rock</strong>, and <strong> ambient</strong> are the genres I really enjoy.
+                    Here you can listen to one of my currently favorite songs.
+                </p>
+            </div>
+            <div class="col-md-6 text-right">
+                <iframe width="100%" height="315"
+                    src="https://www.youtube.com/embed/7j6C9METNm0"
+                    frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+                </iframe>
+            </div>
+        </div> 
+    </section>
+    
+    <section id="interests_lol" class="container mt-5">
+        <div class="row">
+            <div class="col-md-6 text-left">
+                <img src="images/lux11.png" class="lux" alt="lux" width="100%">
+            </div>
+            <div class="col-md-6 text-right">
+                <p>
+                    <br>
+                    Unfortunately, I play video games with my
+                    most played game being <strong> League of Legends</strong>.
+                    That's why I also like <strong>hiking</strong> ,because
+                    it's important to touch grass once in a while.
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    
+    <section id="subjects" class="container mt-5">
+        <h3>Subjects</h3>
+        <p>Here are the subjects that I have passed so far:</p>
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <thead class="custom">
+                    <tr>
+                        <th>First Semester</th>
+                        <th>Second Semester</th>
+                        <th>Third Semester</th>
+                        <th>Fourth Semester</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>cs100</td>
+                        <td>cs150</td>
+                        <td>cs217</td>
+                        <td>cs215</td>
+                    </tr>
+                    <tr>
+                        <td>cs120</td>
+                        <td>cs111</td>
+                        <td>cs240</td>
+                        <td>cs180</td>
+                    </tr>
+                    <tr>
+                        <td>cs110</td>
+                        <td>cs225</td>
+                        <td>cs280</td>
+                        <td>cs255</td>
+                    </tr>
+                    <tr>
+                        <td>cs108</td>
+                        <td>cs119</td>
+                        <td>cs208</td>
+                        <td>cs209</td>
+                    </tr>
+                    <tr>
+                        <td>cs112</td>
+                        <td>cs118</td>
+                        <td>cs209</td>
+                        <td>cs380</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>cs109</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+    
+    <section id="contact" class="container mt-5">
+        <h3>Contact</h3>
+        <p>Email: <a href="mailto:csd5150@csd.uoc.gr">csd5150@csd.uoc.gr</a>
+        <br>Instagram: <a href="https://www.instagram.com/antreassin/" target="_blank">antreassin</a>
+        <br>LinkedIn: <a href="https://www.linkedin.com/in/antreas-sinanis-94623631a/" target="_blank">Antreas Sinanis</a>
+        </p>
+        <div class="fb-share-button" data-href="https://google.com" data-layout="button_count"></div>
+    </section>
+    
+    
+    <footer class="bg-dark text-white text-center py-4">
+        <a href="https://www.youtube.com/watch?v=baYqvk5Db80" class="fa fa-youtube" target="_blank" ></a>
+        <a href="https://www.instagram.com/antreassin/" class="fa fa-instagram" target="_blank"></a>
+        <a href="https://www.linkedin.com/in/antreas-sinanis-94623631a/" class="fa fa-linkedin" target="_blank"></a>
+    </footer>
+</body>
+</html>
